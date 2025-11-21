@@ -7,6 +7,7 @@ import { AttributionModels } from "@/components/dashboard/attribution-models";
 import { LeadJourney } from "@/components/dashboard/lead-journey";
 import { LeadsTable } from "@/components/dashboard/leads-table";
 import { Campaigns } from "@/components/dashboard/campaigns";
+import { Integrations } from "@/components/dashboard/integrations";
 import { Button } from "@/components/ui/button";
 import { Select } from "@/components/ui/select";
 import { ThemeToggle } from "@/components/ui/theme-toggle";
@@ -25,9 +26,10 @@ import {
   Download,
   Users,
   Target,
+  Zap,
 } from "lucide-react";
 
-type Tab = "overview" | "channels" | "attribution" | "journey" | "leads" | "campaigns";
+type Tab = "overview" | "channels" | "campaigns" | "leads" | "integrations" | "attribution" | "journey";
 
 export default function Home() {
   const [activeTab, setActiveTab] = useState<Tab>("overview");
@@ -38,6 +40,7 @@ export default function Home() {
     { id: "channels" as Tab, label: "Channels", icon: BarChart3 },
     { id: "campaigns" as Tab, label: "Campaigns", icon: Target },
     { id: "leads" as Tab, label: "All Leads", icon: Users },
+    { id: "integrations" as Tab, label: "Integrations", icon: Zap },
     { id: "attribution" as Tab, label: "Attribution", icon: GitBranch },
     { id: "journey" as Tab, label: "Lead Journey", icon: Route },
   ];
@@ -155,6 +158,8 @@ export default function Home() {
                   "Manage and track your marketing campaigns"}
                 {activeTab === "leads" &&
                   "View, search, and manage all leads in your pipeline"}
+                {activeTab === "integrations" &&
+                  "Monitor and manage your connected services and data syncs"}
                 {activeTab === "attribution" &&
                   "Compare different attribution models to understand channel value"}
                 {activeTab === "journey" &&
@@ -185,6 +190,7 @@ export default function Home() {
                 {activeTab === "channels" && <ChannelPerformance />}
                 {activeTab === "campaigns" && <Campaigns />}
                 {activeTab === "leads" && <LeadsTable />}
+                {activeTab === "integrations" && <Integrations />}
                 {activeTab === "attribution" && <AttributionModels />}
                 {activeTab === "journey" && <LeadJourney />}
               </div>
