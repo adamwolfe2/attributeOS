@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { ExecutiveSummary } from "@/components/dashboard/executive-summary";
 import { ChannelPerformance } from "@/components/dashboard/channel-performance";
 import { AttributionModels } from "@/components/dashboard/attribution-models";
@@ -13,12 +13,15 @@ import { ConversionFunnel } from "@/components/dashboard/conversion-funnel";
 import { Forecast } from "@/components/dashboard/forecast";
 import { Button } from "@/components/ui/button";
 import { Select } from "@/components/ui/select";
+import { DateRangePicker } from "@/components/ui/date-range-picker";
 import { ThemeToggle } from "@/components/ui/theme-toggle";
 import { useLoading } from "@/hooks/use-loading";
 import { LoadingSpinner } from "@/components/ui/loading-spinner";
 import { Skeleton } from "@/components/ui/skeleton";
 import { NotificationsDropdown } from "@/components/header/notifications-dropdown";
 import { UserMenu } from "@/components/header/user-menu";
+import { CommandPalette } from "@/components/ui/command-palette";
+import { useKeyboardShortcuts } from "@/hooks/use-keyboard-shortcuts";
 import {
   LayoutDashboard,
   BarChart3,
@@ -41,7 +44,18 @@ type Tab = "overview" | "channels" | "campaigns" | "leads" | "goals" | "integrat
 
 export default function Home() {
   const [activeTab, setActiveTab] = useState<Tab>("overview");
+  const [commandPaletteOpen, setCommandPaletteOpen] = useState(false);
   const isLoading = useLoading(800);
+
+  // Keyboard shortcuts
+  useKeyboardShortcuts(
+    {
+      "cmd+k": () => setCommandPaletteOpen(true),
+      "ctrl+k": () => setCommandPaletteOpen(true),
+      escape: () => setCommandPaletteOpen(false),
+    },
+    true
+  );
 
   const tabs = [
     { id: "overview" as Tab, label: "Overview", icon: LayoutDashboard },
@@ -76,12 +90,7 @@ export default function Home() {
           </div>
 
           <div className="ml-auto flex items-center gap-3">
-            <Select className="w-[180px]" defaultValue="last30">
-              <option value="last7">Last 7 days</option>
-              <option value="last30">Last 30 days</option>
-              <option value="last90">Last 90 days</option>
-              <option value="custom">Custom range</option>
-            </Select>
+            <DateRangePicker />
 
             <Button variant="outline" size="sm">
               <Download className="h-4 w-4 mr-2" />
@@ -224,6 +233,13 @@ export default function Home() {
           </p>
         </div>
       </footer>
+
+      {/* Command Palette */}
+      <CommandPalette
+        isOpen={commandPaletteOpen}
+        onClose={() => setCommandPaletteOpen(false)}
+        onNavigate={(tab) => setActiveTab(tab as Tab)}
+      />
     </div>
   );
 }
