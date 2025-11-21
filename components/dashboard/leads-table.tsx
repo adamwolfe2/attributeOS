@@ -6,6 +6,7 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { mockLeads, mockChannels, type Lead } from "@/lib/mock-data";
 import { formatCurrency, formatNumber } from "@/lib/utils";
+import { exportToCSV } from "@/lib/export";
 import {
   Search,
   Filter,
@@ -129,6 +130,18 @@ export function LeadsTable() {
     100
   ).toFixed(1);
 
+  const handleExport = () => {
+    const exportData = filteredLeads.map((lead) => ({
+      Company: lead.company,
+      Email: lead.email,
+      Status: lead.status,
+      "First Touch": lead.firstTouch.source,
+      Value: lead.value,
+      "Created Date": new Date(lead.createdDate).toLocaleDateString(),
+    }));
+    exportToCSV(exportData, "leads");
+  };
+
   return (
     <div className="space-y-6">
       {/* Summary Stats */}
@@ -185,9 +198,9 @@ export function LeadsTable() {
                 Manage and track all your leads in one place
               </CardDescription>
             </div>
-            <Button variant="outline" size="sm">
+            <Button variant="outline" size="sm" onClick={handleExport}>
               <Download className="h-4 w-4 mr-2" />
-              Export
+              Export CSV
             </Button>
           </div>
         </CardHeader>

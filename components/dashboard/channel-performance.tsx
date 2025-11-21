@@ -5,6 +5,8 @@ import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/com
 import { Badge } from "@/components/ui/badge";
 import { mockChannels } from "@/lib/mock-data";
 import { formatCurrency, formatNumber, formatPercent } from "@/lib/utils";
+import { exportToCSV } from "@/lib/export";
+import { Button } from "@/components/ui/button";
 import {
   BarChart,
   Bar,
@@ -16,7 +18,7 @@ import {
   Legend,
   Cell,
 } from "recharts";
-import { ArrowUpDown, TrendingUp, TrendingDown } from "lucide-react";
+import { ArrowUpDown, TrendingUp, TrendingDown, Download } from "lucide-react";
 
 type SortField = "revenue" | "roi" | "spend" | "leads" | "roas";
 type SortDirection = "asc" | "desc";
@@ -38,6 +40,19 @@ export function ChannelPerformance() {
       setSortField(field);
       setSortDirection("desc");
     }
+  };
+
+  const handleExport = () => {
+    const exportData = sortedChannels.map((channel) => ({
+      Channel: channel.name,
+      Spend: channel.spend,
+      Leads: channel.leads,
+      Revenue: channel.revenue,
+      "ROI %": channel.roi.toFixed(2),
+      ROAS: channel.roas.toFixed(2),
+      Conversions: channel.conversions,
+    }));
+    exportToCSV(exportData, "channel-performance");
   };
 
   const getROIBadge = (roi: number) => {
@@ -108,10 +123,18 @@ export function ChannelPerformance() {
       {/* Channel Performance Table */}
       <Card>
         <CardHeader>
-          <CardTitle>Channel Performance Details</CardTitle>
-          <CardDescription>
-            Detailed breakdown of all marketing channel metrics
-          </CardDescription>
+          <div className="flex items-center justify-between">
+            <div>
+              <CardTitle>Channel Performance Details</CardTitle>
+              <CardDescription>
+                Detailed breakdown of all marketing channel metrics
+              </CardDescription>
+            </div>
+            <Button variant="outline" size="sm" onClick={handleExport}>
+              <Download className="h-4 w-4 mr-2" />
+              Export CSV
+            </Button>
+          </div>
         </CardHeader>
         <CardContent>
           <div className="overflow-x-auto">
