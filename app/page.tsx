@@ -9,6 +9,8 @@ import { LeadsTable } from "@/components/dashboard/leads-table";
 import { Campaigns } from "@/components/dashboard/campaigns";
 import { Integrations } from "@/components/dashboard/integrations";
 import { GoalsTracker } from "@/components/dashboard/goals-tracker";
+import { ConversionFunnel } from "@/components/dashboard/conversion-funnel";
+import { Forecast } from "@/components/dashboard/forecast";
 import { Button } from "@/components/ui/button";
 import { Select } from "@/components/ui/select";
 import { ThemeToggle } from "@/components/ui/theme-toggle";
@@ -31,9 +33,11 @@ import {
   Target,
   Zap,
   Trophy,
+  Filter,
+  TrendingUp,
 } from "lucide-react";
 
-type Tab = "overview" | "channels" | "campaigns" | "leads" | "goals" | "integrations" | "attribution" | "journey";
+type Tab = "overview" | "channels" | "campaigns" | "leads" | "goals" | "integrations" | "attribution" | "journey" | "funnel" | "forecast";
 
 export default function Home() {
   const [activeTab, setActiveTab] = useState<Tab>("overview");
@@ -44,6 +48,8 @@ export default function Home() {
     { id: "channels" as Tab, label: "Channels", icon: BarChart3 },
     { id: "campaigns" as Tab, label: "Campaigns", icon: Target },
     { id: "leads" as Tab, label: "All Leads", icon: Users },
+    { id: "funnel" as Tab, label: "Conversion Funnel", icon: Filter },
+    { id: "forecast" as Tab, label: "Forecast", icon: TrendingUp },
     { id: "goals" as Tab, label: "Goals", icon: Trophy },
     { id: "integrations" as Tab, label: "Integrations", icon: Zap },
     { id: "attribution" as Tab, label: "Attribution", icon: GitBranch },
@@ -158,6 +164,10 @@ export default function Home() {
                   "Manage and track your marketing campaigns"}
                 {activeTab === "leads" &&
                   "View, search, and manage all leads in your pipeline"}
+                {activeTab === "funnel" &&
+                  "Visualize conversion rates and drop-offs at each stage of your sales pipeline"}
+                {activeTab === "forecast" &&
+                  "AI-powered predictions and projections for revenue and lead generation"}
                 {activeTab === "goals" &&
                   "Track progress towards your business objectives and KPIs"}
                 {activeTab === "integrations" &&
@@ -192,6 +202,8 @@ export default function Home() {
                 {activeTab === "channels" && <ChannelPerformance />}
                 {activeTab === "campaigns" && <Campaigns />}
                 {activeTab === "leads" && <LeadsTable />}
+                {activeTab === "funnel" && <ConversionFunnel />}
+                {activeTab === "forecast" && <Forecast />}
                 {activeTab === "goals" && <GoalsTracker />}
                 {activeTab === "integrations" && <Integrations />}
                 {activeTab === "attribution" && <AttributionModels />}

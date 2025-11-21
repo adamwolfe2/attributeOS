@@ -3,6 +3,7 @@
 import { Card, CardContent } from "@/components/ui/card";
 import { ArrowUp, ArrowDown, TrendingUp } from "lucide-react";
 import { cn, formatCurrency, formatNumber, formatPercent } from "@/lib/utils";
+import { Sparkline } from "@/components/ui/sparkline";
 
 interface StatCardProps {
   title: string;
@@ -11,6 +12,8 @@ interface StatCardProps {
   changeLabel?: string;
   icon?: React.ReactNode;
   format?: "currency" | "number" | "percent" | "text";
+  sparklineData?: number[];
+  sparklineColor?: string;
 }
 
 export function StatCard({
@@ -20,6 +23,8 @@ export function StatCard({
   changeLabel,
   icon,
   format = "text",
+  sparklineData,
+  sparklineColor,
 }: StatCardProps) {
   const formattedValue =
     format === "currency"
@@ -69,6 +74,15 @@ export function StatCard({
                     {changeLabel}
                   </span>
                 )}
+              </div>
+            )}
+            {sparklineData && sparklineData.length > 0 && (
+              <div className="mt-4">
+                <Sparkline
+                  data={sparklineData}
+                  color={sparklineColor || "#3b82f6"}
+                  height={32}
+                />
               </div>
             )}
           </div>

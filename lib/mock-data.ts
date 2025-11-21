@@ -436,3 +436,11 @@ export const mockMonthlyTrend = [
   { month: "Nov", revenue: 712000, spend: 39000, leads: 2234 },
   { month: "Dec", revenue: 723000, spend: 41700, leads: 2381 },
 ];
+
+// Sparkline data for trends
+export const sparklineData = {
+  revenue: mockMonthlyTrend.map(d => d.revenue),
+  spend: mockMonthlyTrend.map(d => d.spend),
+  leads: mockMonthlyTrend.map(d => d.leads),
+  roi: mockMonthlyTrend.map((d, i) => ((d.revenue - d.spend) / d.spend) * 100),
+};

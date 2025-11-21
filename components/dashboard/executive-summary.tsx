@@ -22,7 +22,7 @@ import {
   ResponsiveContainer,
   Legend,
 } from "recharts";
-import { mockSummaryStats, mockMonthlyTrend } from "@/lib/mock-data";
+import { mockSummaryStats, mockMonthlyTrend, sparklineData } from "@/lib/mock-data";
 import { calculateROI } from "@/lib/utils";
 
 export function ExecutiveSummary() {
@@ -42,6 +42,8 @@ export function ExecutiveSummary() {
           change={12.5}
           changeLabel="vs last month"
           icon={<DollarSign className="h-6 w-6 text-blue-600 dark:text-blue-400" />}
+          sparklineData={sparklineData.revenue}
+          sparklineColor="#3b82f6"
         />
         <StatCard
           title="Marketing Spend"
@@ -50,6 +52,8 @@ export function ExecutiveSummary() {
           change={5.2}
           changeLabel="vs last month"
           icon={<TrendingUp className="h-6 w-6 text-purple-600 dark:text-purple-400" />}
+          sparklineData={sparklineData.spend}
+          sparklineColor="#8b5cf6"
         />
         <StatCard
           title="Total Leads"
@@ -58,6 +62,8 @@ export function ExecutiveSummary() {
           change={18.3}
           changeLabel="vs last month"
           icon={<Users className="h-6 w-6 text-green-600 dark:text-green-400" />}
+          sparklineData={sparklineData.leads}
+          sparklineColor="#10b981"
         />
         <StatCard
           title="Overall ROI"
@@ -66,6 +72,8 @@ export function ExecutiveSummary() {
           change={7.1}
           changeLabel="vs last month"
           icon={<Target className="h-6 w-6 text-orange-600 dark:text-orange-400" />}
+          sparklineData={sparklineData.roi}
+          sparklineColor="#f59e0b"
         />
       </div>
 
