@@ -8,6 +8,7 @@ import { LeadJourney } from "@/components/dashboard/lead-journey";
 import { LeadsTable } from "@/components/dashboard/leads-table";
 import { Campaigns } from "@/components/dashboard/campaigns";
 import { Integrations } from "@/components/dashboard/integrations";
+import { GoalsTracker } from "@/components/dashboard/goals-tracker";
 import { Button } from "@/components/ui/button";
 import { Select } from "@/components/ui/select";
 import { ThemeToggle } from "@/components/ui/theme-toggle";
@@ -29,9 +30,10 @@ import {
   Users,
   Target,
   Zap,
+  Trophy,
 } from "lucide-react";
 
-type Tab = "overview" | "channels" | "campaigns" | "leads" | "integrations" | "attribution" | "journey";
+type Tab = "overview" | "channels" | "campaigns" | "leads" | "goals" | "integrations" | "attribution" | "journey";
 
 export default function Home() {
   const [activeTab, setActiveTab] = useState<Tab>("overview");
@@ -42,6 +44,7 @@ export default function Home() {
     { id: "channels" as Tab, label: "Channels", icon: BarChart3 },
     { id: "campaigns" as Tab, label: "Campaigns", icon: Target },
     { id: "leads" as Tab, label: "All Leads", icon: Users },
+    { id: "goals" as Tab, label: "Goals", icon: Trophy },
     { id: "integrations" as Tab, label: "Integrations", icon: Zap },
     { id: "attribution" as Tab, label: "Attribution", icon: GitBranch },
     { id: "journey" as Tab, label: "Lead Journey", icon: Route },
@@ -155,6 +158,8 @@ export default function Home() {
                   "Manage and track your marketing campaigns"}
                 {activeTab === "leads" &&
                   "View, search, and manage all leads in your pipeline"}
+                {activeTab === "goals" &&
+                  "Track progress towards your business objectives and KPIs"}
                 {activeTab === "integrations" &&
                   "Monitor and manage your connected services and data syncs"}
                 {activeTab === "attribution" &&
@@ -187,6 +192,7 @@ export default function Home() {
                 {activeTab === "channels" && <ChannelPerformance />}
                 {activeTab === "campaigns" && <Campaigns />}
                 {activeTab === "leads" && <LeadsTable />}
+                {activeTab === "goals" && <GoalsTracker />}
                 {activeTab === "integrations" && <Integrations />}
                 {activeTab === "attribution" && <AttributionModels />}
                 {activeTab === "journey" && <LeadJourney />}
