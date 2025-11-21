@@ -11,6 +11,7 @@ import { Integrations } from "@/components/dashboard/integrations";
 import { GoalsTracker } from "@/components/dashboard/goals-tracker";
 import { ConversionFunnel } from "@/components/dashboard/conversion-funnel";
 import { Forecast } from "@/components/dashboard/forecast";
+import { MetricsComparison } from "@/components/dashboard/metrics-comparison";
 import { Button } from "@/components/ui/button";
 import { Select } from "@/components/ui/select";
 import { DateRangePicker } from "@/components/ui/date-range-picker";
@@ -38,9 +39,10 @@ import {
   Trophy,
   Filter,
   TrendingUp,
+  ArrowUpDown,
 } from "lucide-react";
 
-type Tab = "overview" | "channels" | "campaigns" | "leads" | "goals" | "integrations" | "attribution" | "journey" | "funnel" | "forecast";
+type Tab = "overview" | "channels" | "campaigns" | "leads" | "goals" | "integrations" | "attribution" | "journey" | "funnel" | "forecast" | "metrics";
 
 export default function Home() {
   const [activeTab, setActiveTab] = useState<Tab>("overview");
@@ -65,6 +67,7 @@ export default function Home() {
     { id: "funnel" as Tab, label: "Conversion Funnel", icon: Filter },
     { id: "forecast" as Tab, label: "Forecast", icon: TrendingUp },
     { id: "goals" as Tab, label: "Goals", icon: Trophy },
+    { id: "metrics" as Tab, label: "Metrics Comparison", icon: ArrowUpDown },
     { id: "integrations" as Tab, label: "Integrations", icon: Zap },
     { id: "attribution" as Tab, label: "Attribution", icon: GitBranch },
     { id: "journey" as Tab, label: "Lead Journey", icon: Route },
@@ -179,6 +182,8 @@ export default function Home() {
                   "AI-powered predictions and projections for revenue and lead generation"}
                 {activeTab === "goals" &&
                   "Track progress towards your business objectives and KPIs"}
+                {activeTab === "metrics" &&
+                  "Compare multiple metrics side-by-side with advanced visualization"}
                 {activeTab === "integrations" &&
                   "Monitor and manage your connected services and data syncs"}
                 {activeTab === "attribution" &&
@@ -214,6 +219,7 @@ export default function Home() {
                 {activeTab === "funnel" && <ConversionFunnel />}
                 {activeTab === "forecast" && <Forecast />}
                 {activeTab === "goals" && <GoalsTracker />}
+                {activeTab === "metrics" && <MetricsComparison />}
                 {activeTab === "integrations" && <Integrations />}
                 {activeTab === "attribution" && <AttributionModels />}
                 {activeTab === "journey" && <LeadJourney />}
