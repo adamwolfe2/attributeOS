@@ -14,6 +14,8 @@ import { ThemeToggle } from "@/components/ui/theme-toggle";
 import { useLoading } from "@/hooks/use-loading";
 import { LoadingSpinner } from "@/components/ui/loading-spinner";
 import { Skeleton } from "@/components/ui/skeleton";
+import { NotificationsDropdown } from "@/components/header/notifications-dropdown";
+import { UserMenu } from "@/components/header/user-menu";
 import {
   LayoutDashboard,
   BarChart3,
@@ -79,16 +81,11 @@ export default function Home() {
 
             <div className="flex items-center gap-2 ml-2">
               <ThemeToggle />
-              <Button variant="ghost" size="icon" className="relative">
-                <Bell className="h-5 w-5" />
-                <span className="absolute top-1 right-1 w-2 h-2 bg-red-500 rounded-full"></span>
-              </Button>
+              <NotificationsDropdown />
               <Button variant="ghost" size="icon">
                 <Settings className="h-5 w-5" />
               </Button>
-              <Button variant="ghost" size="icon">
-                <User className="h-5 w-5" />
-              </Button>
+              <UserMenu />
             </div>
           </div>
         </div>
