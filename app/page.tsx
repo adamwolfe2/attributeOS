@@ -5,8 +5,14 @@ import { ExecutiveSummary } from "@/components/dashboard/executive-summary";
 import { ChannelPerformance } from "@/components/dashboard/channel-performance";
 import { AttributionModels } from "@/components/dashboard/attribution-models";
 import { LeadJourney } from "@/components/dashboard/lead-journey";
+import { LeadsTable } from "@/components/dashboard/leads-table";
+import { Campaigns } from "@/components/dashboard/campaigns";
 import { Button } from "@/components/ui/button";
 import { Select } from "@/components/ui/select";
+import { ThemeToggle } from "@/components/ui/theme-toggle";
+import { useLoading } from "@/hooks/use-loading";
+import { LoadingSpinner } from "@/components/ui/loading-spinner";
+import { Skeleton } from "@/components/ui/skeleton";
 import {
   LayoutDashboard,
   BarChart3,
@@ -17,16 +23,21 @@ import {
   User,
   Calendar,
   Download,
+  Users,
+  Target,
 } from "lucide-react";
 
-type Tab = "overview" | "channels" | "attribution" | "journey";
+type Tab = "overview" | "channels" | "attribution" | "journey" | "leads" | "campaigns";
 
 export default function Home() {
   const [activeTab, setActiveTab] = useState<Tab>("overview");
+  const isLoading = useLoading(800);
 
   const tabs = [
     { id: "overview" as Tab, label: "Overview", icon: LayoutDashboard },
     { id: "channels" as Tab, label: "Channels", icon: BarChart3 },
+    { id: "campaigns" as Tab, label: "Campaigns", icon: Target },
+    { id: "leads" as Tab, label: "All Leads", icon: Users },
     { id: "attribution" as Tab, label: "Attribution", icon: GitBranch },
     { id: "journey" as Tab, label: "Lead Journey", icon: Route },
   ];
@@ -64,6 +75,7 @@ export default function Home() {
             </Button>
 
             <div className="flex items-center gap-2 ml-2">
+              <ThemeToggle />
               <Button variant="ghost" size="icon" className="relative">
                 <Bell className="h-5 w-5" />
                 <span className="absolute top-1 right-1 w-2 h-2 bg-red-500 rounded-full"></span>
@@ -139,6 +151,10 @@ export default function Home() {
                   "Get a high-level view of your marketing performance and ROI"}
                 {activeTab === "channels" &&
                   "Analyze performance across all marketing channels"}
+                {activeTab === "campaigns" &&
+                  "Manage and track your marketing campaigns"}
+                {activeTab === "leads" &&
+                  "View, search, and manage all leads in your pipeline"}
                 {activeTab === "attribution" &&
                   "Compare different attribution models to understand channel value"}
                 {activeTab === "journey" &&
@@ -147,12 +163,32 @@ export default function Home() {
             </div>
 
             {/* Tab Content */}
-            <div className="animate-in fade-in duration-300">
-              {activeTab === "overview" && <ExecutiveSummary />}
-              {activeTab === "channels" && <ChannelPerformance />}
-              {activeTab === "attribution" && <AttributionModels />}
-              {activeTab === "journey" && <LeadJourney />}
-            </div>
+            {isLoading ? (
+              <div className="space-y-6">
+                <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
+                  {[1, 2, 3, 4].map((i) => (
+                    <div key={i} className="p-6 bg-white dark:bg-slate-800 rounded-lg border border-slate-200 dark:border-slate-700">
+                      <Skeleton className="h-4 w-24 mb-4" />
+                      <Skeleton className="h-8 w-32 mb-2" />
+                      <Skeleton className="h-3 w-20" />
+                    </div>
+                  ))}
+                </div>
+                <div className="bg-white dark:bg-slate-800 rounded-lg border border-slate-200 dark:border-slate-700 p-6">
+                  <Skeleton className="h-6 w-48 mb-4" />
+                  <Skeleton className="h-[350px] w-full" />
+                </div>
+              </div>
+            ) : (
+              <div className="animate-in fade-in duration-500">
+                {activeTab === "overview" && <ExecutiveSummary />}
+                {activeTab === "channels" && <ChannelPerformance />}
+                {activeTab === "campaigns" && <Campaigns />}
+                {activeTab === "leads" && <LeadsTable />}
+                {activeTab === "attribution" && <AttributionModels />}
+                {activeTab === "journey" && <LeadJourney />}
+              </div>
+            )}
           </div>
         </main>
       </div>
