@@ -211,7 +211,7 @@ export default function Home() {
                 </div>
               </div>
             ) : (
-              <div className="animate-in fade-in duration-500">
+              <div>
                 {activeTab === "overview" && <ExecutiveSummary />}
                 {activeTab === "channels" && <ChannelPerformance />}
                 {activeTab === "campaigns" && <Campaigns />}

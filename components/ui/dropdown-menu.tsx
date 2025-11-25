@@ -35,7 +35,7 @@ export function DropdownMenuContent({
   return (
     <div
       className={cn(
-        "absolute z-50 mt-2 min-w-[200px] overflow-hidden rounded-md border border-slate-200 bg-white shadow-lg animate-in fade-in-0 zoom-in-95 dark:border-slate-700 dark:bg-slate-800",
+        "absolute z-50 mt-2 min-w-[200px] overflow-hidden rounded-md border border-slate-200 bg-white shadow-lg dark:border-slate-700 dark:bg-slate-800",
         alignClasses[align],
         className
       )}
